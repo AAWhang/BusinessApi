@@ -13,23 +13,26 @@ namespace BusinessApi.Controllers
     {
         private BusinessApiContext _db = new BusinessApiContext();
 
-        // GET api/animals
+        // GET api/shops
         [HttpGet]
         public ActionResult<IEnumerable<Shop>> Get()
         {
             return _db.Shops.ToList();
         }
 
-        // POST api/values
+        // POST api/shops
         [HttpPost]
-        public void Post([FromBody] Shop animal)
+        public void Post([FromBody] Shop shop)
         {
-            _db.Shops.Add(animal);
+            _db.Shops.Add(shop);
             _db.SaveChanges();
         }
         [HttpGet("{id}")]
         public ActionResult<Shop> Get(int id)
         {
+          Random rand = new Random();
+          int intIdt = _db.Shops.Max(u => (int)u.ShopId);
+          id = rand.Next(intIdt);
             return _db.Shops.FirstOrDefault(x => x.ShopId == id);
         }
         [HttpPut("{id}")]
@@ -45,6 +48,15 @@ namespace BusinessApi.Controllers
             var shopToDelete = _db.Shops.FirstOrDefault(x => x.ShopId == id);
             _db.Shops.Remove(shopToDelete);
             _db.SaveChanges();
+        }
+
+        [Route("random")]
+        public ActionResult<Shop> random()
+        {
+          Random rand = new Random();
+          int intIdt = _db.Shops.Max(u => (int)u.ShopId);
+          int id = rand.Next(intIdt);
+            return _db.Shops.FirstOrDefault(x => x.ShopId == id);
         }
     }
 }

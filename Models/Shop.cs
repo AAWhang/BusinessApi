@@ -9,8 +9,14 @@ namespace BusinessApi.Models
     {
         [Key]
         public int ShopId { get; set; }
+        [Required]
         public string Type { get; set; }
+        [Required]
+        [StringLength(30)]
         public string Name { get; set; }
+        [Required]
         public int PRange { get; set; }
+        [Required]
+        public string Comment { get; set; }
     }
 }
